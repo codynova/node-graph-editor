@@ -1,4 +1,4 @@
-# node-graph-engine
+# node-graph-editor
 
 This project started as a fork of ReteJS (https://github.com/retejs/rete)
 
