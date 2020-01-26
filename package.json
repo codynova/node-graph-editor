@@ -2,14 +2,15 @@
 	"name": "node-graph-editor",
 	"version": "0.0.1",
 	"description": "Browser-based JavaScript editor for visual programming node graph engine node-graph-engine",
-	"main": "app.js",
-	"private": true,
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
 	"scripts": {
 		"start": "npm run build && npm run serve",
 		"clean": "rimraf dist/",
 		"build": "npm run clean && tsc",
 		"serve": "node test/index.js",
-		"dev": "nodemon test/index.ts"
+		"dev": "nodemon test/index.ts",
+		"prepublish": "npm run build"
 	},
 	"repository": {
 		"type": "git",
@@ -24,5 +25,8 @@
 	"devDependencies": {
 		"rimraf": "3.0.0",
 		"typescript": "^3.7.4"
+	},
+	"dependencies": {
+		"node-graph-engine": "0.0.2"
 	}
 }
