@@ -1,6 +1,45 @@
 import { Events, DefaultEvents, Input, Output, Connection, Socket, Control, EngineData } from '../../node-graph-engine/dist';
 import { EditorView, Mouse, Transform, ZoomSource } from './view';
 
+// TO DO: finish this, figure out how to structure EditorEvent types...
+
+// enum EditorEventTypes {
+//     NodeCreate = 'nodecreate',
+//     NodeCreated = 'nodecreated',
+//     NodeRemove = 'noderemove',
+//     NodeRemoved = 'noderemoved',
+//     ConnectionCreate = 'connectioncreate',
+//     ConnectionCreated = 'connectioncreated',
+//     ConnectionRemove = 'connectionremove',
+//     ConnectionRemoved = 'connectionremoved',
+//     TranslateNode = 'translatenode',
+//     NodeTranslate = 'nodetranslate',
+//     NodeTranslated = 'nodetranslated',
+//     NodeDragged = 'nodedragged',
+//     SelectNode = 'selectnode',
+//     MultiSelectNode = 'multiselectnode',
+//     NodeSelect = 'nodeselect',
+//     NodeSelected = 'nodeselected',
+//     RenderNode = 'rendernode',
+//     RenderSocket = 'rendersocket',
+//     RenderControl = 'rendercontrol',
+//     RenderConnection = 'renderconnection',
+//     UpdateConnection = 'updateconnection',
+//     KeyDown = 'keydown',
+//     KeyUp = 'keyup',
+//     Translate = 'translate',
+//     Translated = 'translated',
+//     Zoom = 'zoom',
+//     Zoomed = 'zoomed',
+//     Click = 'click',
+//     MouseMove = 'mousemove',
+//     ContextMenu = 'contextmenu',
+//     Import = 'import',
+//     Export = 'export',
+//     Process = 'process',
+//     Clear = 'clear',
+// }
+
 export interface DefaultEditorEvents extends DefaultEvents {
     nodecreate: Node;
     nodecreated: Node;
