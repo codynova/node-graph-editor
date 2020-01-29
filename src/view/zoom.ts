@@ -4,22 +4,22 @@ const ZOOM_SCROLL_SCALE_FACTOR = 1 / 120;
 const ZOOM_EVENT_SCALE_FACTOR = 1 / 3;
 const ZOOM_TOUCH_SCALE_FACTOR = 0.5;
 
-export type ZoomFunction = (delta: number, ox: number, oy: number, type: 'touch' | 'wheel' | 'doubleclick') => void;
-
+// TO DO: possibly make ZoomSource an enum
+export type ZoomSource = 'touch' | 'wheel' | 'doubleclick';
+export type ZoomFunction = (delta: number, ox: number, oy: number, type: ZoomSource) => void;
 export type ZoomTouch = { cx: number, cy: number, distance: number };
 
 export class Zoom {
-	element: HTMLElement;
-	intensity: number;
-	onZoom: ZoomFunction;
 	previous: ZoomTouch | null = null;
 	pointers = new Map<number, PointerEvent>();
 	destroy: () => void;
 
-	constructor (container: HTMLElement, element: HTMLElement, intensity: number, onZoom: ZoomFunction) {
-		this.element = element;
-		this.intensity = intensity;
-		this.onZoom = onZoom;
+	constructor (
+		container: HTMLElement,
+		public element: HTMLElement,
+		public intensity: number,
+		public onZoom: ZoomFunction,
+	) {
 
 		container.addEventListener('wheel', this.wheel.bind(this));
 		container.addEventListener('pointerdown', this.down.bind(this));

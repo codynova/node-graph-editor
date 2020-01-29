@@ -1,4 +1,7 @@
-export const listener = <K extends keyof WindowEventMap>(event: K, handler: (e: WindowEventMap[K]) => void) => {
+export const listener = <K extends keyof WindowEventMap>(
+	event: K,
+	handler: (e: WindowEventMap[K]) => void,
+) => {
 	window.addEventListener(event, handler);
 	
 	return () => {
