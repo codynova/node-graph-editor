@@ -1,4 +1,4 @@
-import { Events, DefaultEvents, Input, Output, Connection, Socket, Control, EngineData } from '../../node-graph-engine/dist';
+import { Events, DefaultEvents, Input, Output, Connection, Socket, Control, EngineData } from 'node-graph-engine';
 import { EditorView, Mouse, Transform, ZoomSource } from './view';
 
 // TO DO: finish this, figure out how to structure EditorEvent types...

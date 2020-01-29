@@ -27,6 +27,6 @@
 		"typescript": "^3.7.4"
 	},
 	"dependencies": {
-		"node-graph-engine": "0.0.2"
+		"node-graph-engine": "0.0.3"
 	}
 }
