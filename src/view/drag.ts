@@ -1,15 +1,23 @@
 import { listener } from './listener';
 
 export class Drag {
+	element: HTMLElement;
 	pointerStart: Map<0 | 1, number> | null = null;
 	destroy: () => void;
+	private onTranslate: (x: number, y: number, event: PointerEvent) => void;
+	private onStart: (event: PointerEvent) => void;
+	private onDrag: (event: PointerEvent) => void;
 
 	constructor (
-		public element: HTMLElement,
-		private onTranslate = (x: number, y: number, event: PointerEvent) => {},
-		private onStart = (event: PointerEvent) => {},
-		private onDrag = (event: PointerEvent) => {},
+		element: HTMLElement,
+		onTranslate = (x: number, y: number, event: PointerEvent) => {},
+		onStart = (event: PointerEvent) => {},
+		onDrag = (event: PointerEvent) => {},
 	) {
+		this.element = element;
+		this.onTranslate = onTranslate;
+		this.onStart = onStart;
+		this.onDrag = onDrag;
 		this.element.style.touchAction = 'none';
 		this.element.addEventListener('pointerdown', this.down.bind(this));
 

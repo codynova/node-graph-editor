@@ -4,14 +4,24 @@ import { DefaultEditorEvents } from '../events';
 const POSITION_SCALE_FACTOR = 0.5;
 
 export class SocketView extends Emitter<DefaultEditorEvents> {
+	element: HTMLElement;
+	type: 'input' | 'output';
+	io: IO;
+	node: Node;
+
 	constructor (
-		public element: HTMLElement,
-		public type: 'input' | 'output',
-		public io: IO,
-		public node: Node,
+		element: HTMLElement,
+		type: 'input' | 'output',
+		io: IO,
+		node: Node,
 		emitter: Emitter<DefaultEditorEvents>,
 	) {
 		super(emitter);
+
+		this.element = element;
+		this.type = type;
+		this.io = io;
+		this.node = node;
 
 		this.trigger('rendersocket', { element, [type]: this.io, socket: io.socket });
 	}

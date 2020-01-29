@@ -10,16 +10,22 @@ export type ZoomFunction = (delta: number, ox: number, oy: number, type: ZoomSou
 export type ZoomTouch = { cx: number, cy: number, distance: number };
 
 export class Zoom {
+	element: HTMLElement;
+	intensity: number;
+	onZoom: ZoomFunction;
 	previous: ZoomTouch | null = null;
 	pointers = new Map<number, PointerEvent>();
 	destroy: () => void;
 
 	constructor (
 		container: HTMLElement,
-		public element: HTMLElement,
-		public intensity: number,
-		public onZoom: ZoomFunction,
+		element: HTMLElement,
+		intensity: number,
+		onZoom: ZoomFunction,
 	) {
+		this.element = element;
+		this.intensity = intensity;
+		this.onZoom = onZoom;
 
 		container.addEventListener('wheel', this.wheel.bind(this));
 		container.addEventListener('pointerdown', this.down.bind(this));

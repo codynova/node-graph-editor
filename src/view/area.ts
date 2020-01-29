@@ -6,6 +6,7 @@ import { Zoom, ZoomSource } from './zoom';
 export type Transform = { x: number, y: number, scale: number };
 
 export class Area extends Emitter<DefaultEditorEvents> {
+	container: HTMLElement;
 	element: HTMLElement;
 	transform: Transform = { x: 0, y: 0, scale: 1 };
 	mouse = { x: 0, y: 0 };
@@ -13,12 +14,10 @@ export class Area extends Emitter<DefaultEditorEvents> {
 	private drag: Drag;
 	private zoom: Zoom;
 	
-	constructor (
-		public container: HTMLElement,
-		emitter: Emitter<DefaultEditorEvents>,
-	) {
+	constructor (container: HTMLElement, emitter: Emitter<DefaultEditorEvents>) {
 		super(emitter);
 
+		this.container = container;
 		this.element = document.createElement('div');
 		this.element.style.transformOrigin = '0 0';
 		this.zoom = new Zoom(container, this.element, 0.1, this.onZoom.bind(this));
