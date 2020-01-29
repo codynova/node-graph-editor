@@ -3,7 +3,7 @@ import { DefaultEditorEvents } from '../events';
 import { NodeView } from './node';
 import { ConnectionView } from './connection';
 import { Area } from './area';
-import { listener } from './listener';
+import { listener } from '../listener';
 import { EditorError } from '../errors';
 
 export class EditorView extends Emitter<DefaultEditorEvents> {
@@ -32,7 +32,7 @@ export class EditorView extends Emitter<DefaultEditorEvents> {
 		const component = this.components.get(node.name);
 
 		if (!component) {
-			throw new Error(EditorError.ComponentNotFound + node.name);
+			throw new Error(EditorError.ComponentNotFoundInView + node.name);
 		}
 
 		const nodeView = new NodeView(node, component, this);

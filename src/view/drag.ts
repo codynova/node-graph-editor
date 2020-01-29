@@ -1,4 +1,4 @@
-import { listener } from './listener';
+import { listener } from '../listener';
 
 export class Drag {
 	element: HTMLElement;

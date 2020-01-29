@@ -3,8 +3,8 @@ import { Node } from 'node-graph-engine';
 export class Selected {
 	nodes = new Map<number, Node>();
 
-	add (node: Node, accumulate = false) {
-		if (!accumulate) {
+	add (node: Node, allowMultipleSelected = false) {
+		if (!allowMultipleSelected) {
 			this.nodes.clear();
 			this.nodes.set(node.id, node);
 		}

@@ -58,7 +58,7 @@ export class NodeView extends Emitter<DefaultEditorEvents> {
 		const socket = this.sockets.get(io);
 
 		if (!socket) {
-			throw new Error(EditorError.SocketNotFound + `${io.name}, ${io.key}`);
+			throw new Error(EditorError.SocketNotFoundInView + `${io.name}, ${io.key}`);
 		}
 
 		return socket.getPosition(this.node);
@@ -69,7 +69,7 @@ export class NodeView extends Emitter<DefaultEditorEvents> {
 	}
 
 	onSelect (event: MouseEvent) {
-		const payload = { node: this.node, accumulate: event.ctrlKey, event };
+		const payload = { node: this.node, allowMultipleSelected: event.ctrlKey, event };
 		this.onStart();
 		this.trigger('multiselectnode', payload);
 		this.trigger('selectnode', payload);

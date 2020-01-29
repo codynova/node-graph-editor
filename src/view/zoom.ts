@@ -1,4 +1,4 @@
-import { listener } from './listener';
+import { listener } from '../listener';
 
 const ZOOM_SCROLL_SCALE_FACTOR = 1 / 120;
 const ZOOM_EVENT_SCALE_FACTOR = 1 / 3;

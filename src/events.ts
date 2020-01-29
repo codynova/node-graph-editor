@@ -69,11 +69,11 @@ export interface DefaultEditorEvents extends DefaultEvents {
 	nodedragged: Node;
 	selectnode: {
 		node: Node;
-		accumulate: boolean;
+		allowMultipleSelected: boolean;
 	};
 	multiselectnode: {
 		node: Node;
-		accumulate: boolean;
+		allowMultipleSelected: boolean;
 		event: MouseEvent;
 	};
 	nodeselect: Node;
