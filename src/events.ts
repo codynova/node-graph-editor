@@ -1,5 +1,5 @@
-import { Events, DefaultEvents, Input, Output, Connection, Socket, Control, EngineData } from 'node-graph-engine';
-import { EditorView, Mouse, Transform, ZoomSource } from './view';
+import { Events, DefaultEvents, Node, Input, Output, Connection, Socket, Control, EngineData } from 'node-graph-engine';
+import { EditorView, MouseData, TransformData, ZoomSource } from './view';
 
 // TO DO: finish this, figure out how to structure EditorEvent types...
 
@@ -108,13 +108,13 @@ export interface DefaultEditorEvents extends DefaultEvents {
 	keydown: KeyboardEvent;
 	keyup: KeyboardEvent;
 	translate: {
-		transform: Transform;
+		transform: TransformData;
 		x: number;
 		y: number;
 	};
 	translated: void;
 	zoom: {
-		transform: Transform;
+		transform: TransformData;
 		zoom: number;
 		source: ZoomSource;
 	};
@@ -125,7 +125,7 @@ export interface DefaultEditorEvents extends DefaultEvents {
 		event: Event;
 		container: HTMLElement;
 	};
-	mousemove: Mouse;
+	mousemove: MouseData;
 	contextmenu: {
 		event: MouseEvent;
 		view?: EditorView;

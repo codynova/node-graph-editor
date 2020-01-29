@@ -3,14 +3,15 @@ import { DefaultEditorEvents } from '../events';
 import { Drag } from './drag';
 import { Zoom, ZoomSource } from './zoom';
 
-export type Transform = { x: number, y: number, scale: number };
+export type MouseData = { x: number, y: number };
+export type TransformData = { x: number, y: number, scale: number };
 
 export class Area extends Emitter<DefaultEditorEvents> {
 	container: HTMLElement;
 	element: HTMLElement;
-	transform: Transform = { x: 0, y: 0, scale: 1 };
-	mouse = { x: 0, y: 0 };
-	private startPosition: Transform | null = null;
+	transform: TransformData = { x: 0, y: 0, scale: 1 };
+	mouse: MouseData = { x: 0, y: 0 };
+	private startPosition: TransformData | null = null;
 	private drag: Drag;
 	private zoom: Zoom;
 	
@@ -51,12 +52,14 @@ export class Area extends Emitter<DefaultEditorEvents> {
 	}
 
 	doTranslate (x: number, y: number) {
-		if (!this.trigger('translate', { transform: this.transform, x, y })) {
+		const params = { transform: this.transform, x, y };
+
+		if (!this.trigger('translate', params)) {
 			return;
 		}
 
-		this.transform.x = x;
-		this.transform.y = y;
+		this.transform.x = params.x;
+		this.transform.y = params.y;
 		this.update();
 		this.trigger('translated');
 	}
@@ -74,18 +77,15 @@ export class Area extends Emitter<DefaultEditorEvents> {
 	// TO DO: do the default values for ox and oy do anything at all?
 	// seems they're never used...
 	doZoom (zoom: number, ox = 0, oy = 0, source: ZoomSource) {
-		if (!this.trigger('zoom', { transform: this.transform, zoom, source })) {
+		const params = { transform: this.transform, zoom, source };
+
+		if (!this.trigger('zoom', params)) {
 			return;
 		}
-
-		// TO DO: the Rete source code for zoom() and translate() in this class
-		// pass a params object into trigger...
-		// is it necessary to construct and pass this object to get updates back? pass-by-reference?
-		// https://github.com/retejs/rete/blob/master/src/view/area.ts
-
+		
 		const scale = this.transform.scale;
-		const scaleFactor = (scale - zoom) / ((scale - zoom) || 1);
-		this.transform.scale = zoom || 1;
+		const scaleFactor = (scale - params.zoom) / ((scale - zoom) || 1);
+		this.transform.scale = params.zoom || 1;
 		this.transform.x += ox * scaleFactor;
 		this.transform.y += oy * scaleFactor;
 		this.update();
