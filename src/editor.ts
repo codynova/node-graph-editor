@@ -1,4 +1,4 @@
-import { Context, Node, Output, Input, Connection, EngineData } from 'node-graph-engine';
+import { Context, Node, Output, Input, Connection, EngineData, EngineDataJSON, Validator } from 'node-graph-engine';
 import { DefaultEditorEvents } from './events';
 import { Selected } from './selected';
 import { EditorView } from './view';
@@ -120,13 +120,33 @@ export class NodeEditor extends Context<DefaultEditorEvents> {
 		this.trigger('clear');
 	}
 
+	toJSON (): EngineDataJSON {
+		const data: EngineDataJSON = { id: this.id, nodes: {} };
+		this.nodes.forEach((value, key) => data.nodes[key] = value.toJSON());
+		this.trigger('export', data);
+		return data;
+	}
 
-	// TO DO: finish this
-	toJSON () {}
+	beforeImport (json: EngineDataJSON) {
+		const { success, error } = Validator.validate(this.id, json);
 
-	beforeImport (json: EngineData) {}
+		if (!success) {
+			this.trigger('warn', error);
+			return false;
+		}
 
-	afterImport () {}
+		this.silent = true;
+		this.clear();
+		this.trigger('import', json);
+		return true;
+	}
 
-	async fromJSON (json: EngineData) {}
+	afterImport () {
+		this.silent = false;
+		return true;
+	}
+
+	async fromJSON (json: EngineDataJSON) {
+		// TO DO: finish this...
+	}
 }

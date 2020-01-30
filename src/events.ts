@@ -1,4 +1,4 @@
-import { Events, DefaultEvents, Node, Input, Output, Connection, Socket, Control, EngineData } from 'node-graph-engine';
+import { Events, DefaultEvents, Node, Input, Output, Connection, Socket, Control, EngineDataJSON } from 'node-graph-engine';
 import { EditorView, MouseData, TransformData, ZoomSource } from './view';
 
 // TO DO: finish this, figure out how to structure EditorEvent types...
@@ -131,8 +131,8 @@ export interface DefaultEditorEvents extends DefaultEvents {
 		view?: EditorView;
 		node?: Node;
 	};
-	import: EngineData;
-	export: EngineData;
+	import: EngineDataJSON;
+	export: EngineDataJSON;
 	process: void;
 	clear: void;
 }
