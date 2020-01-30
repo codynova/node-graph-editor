@@ -1,4 +1,4 @@
-import { Context, Node, Output, Input, Connection, EngineData, EngineDataJSON, Validator } from 'node-graph-engine';
+import { Context, Node, Output, Input, Connection, EngineDataJSON, Validator } from 'node-graph-engine';
 import { DefaultEditorEvents } from './events';
 import { Selected } from './selected';
 import { EditorView } from './view';
@@ -105,7 +105,7 @@ export class NodeEditor extends Context<DefaultEditorEvents> {
 			throw new Error(EditorError.ComponentNotFoundInEditor + name);
 		}
 
-		return component;
+		return component as EditorComponent;
 	}
 
 	register (component: EditorComponent) {
@@ -147,6 +147,45 @@ export class NodeEditor extends Context<DefaultEditorEvents> {
 	}
 
 	async fromJSON (json: EngineDataJSON) {
-		// TO DO: finish this...
+		if (!this.beforeImport(json)) {
+			return false;
+		}
+
+		const nodes = new Map<number, Node>();
+
+		try {
+			await Promise.all(Object.keys(json.nodes).map(async id => {
+				const node = json.nodes[id as unknown as number];
+				const component = this.getComponent(node.name);
+				nodes.set(+id, await component.build(Node.fromJSON(node)));
+
+			}));
+
+			Object.keys(json.nodes).forEach(id => {
+				const jsonNode = json.nodes[id as unknown as number];
+				const node = nodes.get(+id)!;
+
+				Object.keys(jsonNode.outputs).forEach(key => {
+					const outputJson = jsonNode.outputs[key];
+	
+					outputJson.connections.forEach(jsonConnection => {
+						const targetOutput = node.outputs.get(key);
+						const targetInput = nodes.get(jsonConnection.nodeId)!.inputs.get(jsonConnection.inputKey);
+
+						if (!targetInput || !targetOutput) {
+							return this.trigger('error', EditorError.ConnectionIONotFound + id)
+						}
+
+						this.connect(targetInput, targetOutput, jsonConnection.data);
+					});
+				});
+			});
+		}
+		catch (error) {
+			this.trigger('warn', error);
+			return !this.afterImport();
+		}
+
+		return this.afterImport();
 	}
 }

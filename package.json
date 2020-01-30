@@ -1,6 +1,6 @@
 {
 	"name": "node-graph-editor",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "Browser-based JavaScript editor for visual programming node graph engine node-graph-engine",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
@@ -27,6 +27,6 @@
 		"typescript": "^3.7.4"
 	},
 	"dependencies": {
-		"node-graph-engine": "0.0.8"
+		"node-graph-engine": "0.0.9"
 	}
 }

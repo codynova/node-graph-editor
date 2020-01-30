@@ -7,4 +7,5 @@ export enum EditorError {
 	ContainerMissingParentElement = 'Container does not have a parent element',
 	NodeNotFoundInEditor = 'Node not found in Editor. Node id: ',
 	ComponentNotFoundInEditor = 'Component not found in Editor. Component name: ',
+	ConnectionIONotFound = 'Connection IO not found for node. Node id: ',
 }
