@@ -1,3 +1,4 @@
+export * from './view';
 export * from './component';
 export * from './editor';
 export * from './errors';
