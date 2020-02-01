@@ -1,4 +1,4 @@
-import { Context, Node, Output, Input, Connection, EngineDataJSON, Validator } from 'node-graph-engine';
+import { Context, Node, Output, Input, Connection, EngineData, EngineDataJSON, Validator } from 'node-graph-engine';
 import { DefaultEditorEvents } from './events';
 import { Selected } from './selected';
 import { EditorView } from './view';
@@ -118,6 +118,28 @@ export class NodeEditor extends Context<DefaultEditorEvents> {
 			this.removeNode(node);
 		}
 		this.trigger('clear');
+	}
+
+	getData (): EngineData {
+		const data = { id: this.id, nodes: this.nodes };
+		data.nodes.forEach(node => {
+			node.inputs.forEach(input => {
+				input.connections = input.connections.map(({ output, data }) => ({
+					nodeId: output.node?.id,
+					outputKey: output.key,
+					data,
+				})) as any;
+			});
+			node.outputs.forEach(output => {
+				output.connections = output.connections.map(({ input, data }) => ({
+					nodeId: input.node?.id,
+					inputKey: input.key,
+					data,
+				})) as any;
+			});
+		});
+		this.trigger('export', data);
+		return data as unknown as EngineData;
 	}
 
 	toJSON (): EngineDataJSON {
